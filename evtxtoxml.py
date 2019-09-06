@@ -1,7 +1,9 @@
 import Evtx.Evtx as evtx
-#import Evtx.Views as e_views
+# import Evtx.Views as e_views
 import argparse
-#import xml.etree.ElementTree as ET
+
+
+# import xml.etree.ElementTree as ET
 
 def main():
     parser = argparse.ArgumentParser(description="Dump a binary EVTX file into XML.")
@@ -10,7 +12,7 @@ def main():
     args = parser.parse_args()
 
     newfilename = args.outputfile
-    file = open(newfilename,"w")
+    file = open(newfilename, "w")
     print("Writing output to " + newfilename)
 
     error_count = 0
@@ -24,20 +26,20 @@ def main():
                 try:
                     s = record.xml()
                     file.write(s)
-                    #root = ET.fromstring(s)
-                    #print root.findall('EventData')
-                    #print root.find('{http://schemas.microsoft.com/win/2004/08/events/event}EventID')
+                    # root = ET.fromstring(s)
+                    # print root.findall('EventData')
+                    # print root.find('{http://schemas.microsoft.com/win/2004/08/events/event}EventID')
                     output_count = output_count + 1
 
                     if (output_count % output_interval == 0):
-                        print "[Working] %d records written to file." % output_count
+                        print("[Working] %d records written to file." % output_count)
 
                 except UnicodeDecodeError:
                     error_count = error_count + 1
-                    print "UnicodeDecode Error encountered skipping entry Errors[%d]" % error_count
+                    print("UnicodeDecode Error encountered skipping entry Errors[%d]" % error_count)
                     continue
     file.write("</Events>")
-    #print norm_count, error_count
+    # print norm_count, error_count
     file.close()
 
 
